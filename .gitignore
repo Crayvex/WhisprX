@@ -1,0 +1,122 @@
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+**/node_modules/
+
+# ==========================================
+# Environment Variables
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Backend env files
+server/.env
+backend/.env
+
+# Frontend env files
+client/.env
+frontend/.env
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# Runtime Files
+# ==========================================
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ==========================================
+# Coverage
+# ==========================================
+coverage/
+.nyc_output/
+
+# ==========================================
+# Build Directories
+# ==========================================
+dist/
+build/
+.next/
+out/
+
+# React/Vite
+client/dist/
+frontend/dist/
+
+# ==========================================
+# Cache
+# ==========================================
+.cache/
+.parcel-cache/
+.eslintcache
+.vite/
+.tmp/
+.temp/
+
+# ==========================================
+# MongoDB Local Files (if applicable)
+# ==========================================
+data/
+*.wt
+*.ns
+
+# ==========================================
+# Socket.IO Temporary Files
+# ==========================================
+*.sock
+
+# ==========================================
+# IDEs & Editors
+# ==========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Testing
+# ==========================================
+jest-results.json
+test-results/
+playwright-report/
+
+# ==========================================
+# TypeScript (if used)
+# ==========================================
+*.tsbuildinfo
+
+# ==========================================
+# Misc
+# ==========================================
+.vercel/
+.netlify/
+.firebase/
+
+# Local configuration
+config/local.js
+config/local.json
