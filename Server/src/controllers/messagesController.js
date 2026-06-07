@@ -80,4 +80,3 @@ export const getChat = asyncHandler(async (req, res) => {
     messages: messages.map((msg) => msg.toPublicJSON()),
   });
 });
-

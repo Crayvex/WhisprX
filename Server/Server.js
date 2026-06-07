@@ -8,6 +8,7 @@ import connectDB from './src/config/db.js';
 import errorHandler from './src/middleware/errorHandler.js';
 import socketAuth from './src/middleware/socketAuth.js';
 import authRoutes from './src/routes/authRoutes.js';
+import friendReqRoutes from './src/routes/friendReqRoutes.js';
 import messageRoutes from './src/routes/messageRoutes.js';
 
 const app = express();
@@ -41,6 +42,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/friends', friendReqRoutes);
 app.use('/api/messages', messageRoutes);
 
 app.use((req, res) => {
