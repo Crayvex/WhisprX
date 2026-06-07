@@ -1,1 +1,40 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@theme {
+    --font-Poppins-Bold: "Poppins-Bold", sans-serif;
+    --font-Poppins-Medium: "Poppins-Medium", sans-serif;
+    --font-Roboto-Medium: "Roboto-Medium", sans-serif;
+}
+
+@font-face {
+    font-family: 'Poppins-Bold';
+    src: url(Font\Poppins\Poppins-Bold.ttf) format(truetype);
+}
+@font-face {
+    font-family: 'Poppins-Medium';
+    src: url(Font\Poppins\Poppins-Medium.ttf) format(truetype);
+}
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url(Font\Roboto\static\Roboto_Condensed-Medium.ttf) format(truetype);
+}
+
+@layer base{
+    main{
+        @apply w-full h-full font-Poppins-Medium;
+
+        #LandingPage{
+            @apply w-full h-dvh relative;
+
+            #Signup{
+                
+                input{
+                    @apply outline-0;
+                }
+            }
+        }
+    }
+}
