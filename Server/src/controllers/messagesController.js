@@ -1,3 +1,4 @@
+import cloudinary from '../config/cloudinary.js';
 import Message from '../models/Message.js';
 import User from '../models/User.js';
 import AppError from '../utils/AppError.js';
@@ -12,7 +13,10 @@ export const sendMessage = asyncHandler(async (req, res) => {
     throw new AppError('Receiver id is required', 400);
   }
 
-  if (!text?.trim() && !img?.trim()) {
+  const hasText = Boolean(text?.trim());
+  const hasImg = typeof img === 'string' && Boolean(img.trim());
+
+  if (!hasText && !hasImg) {
     throw new AppError('Text or image is required', 400);
   }
 
@@ -26,11 +30,17 @@ export const sendMessage = asyncHandler(async (req, res) => {
     throw new AppError('Receiver not found', 404);
   }
 
+  let imgURL;
+  if (hasImg) {
+    const uploadResponse = await cloudinary.uploader.upload(img);
+    imgURL = uploadResponse.secure_url;
+  }
+
   const newMessage = await Message.create({
     senderId,
     receiverId,
     text,
-    img,
+    img: imgURL,
   });
 
   res.status(201).json({

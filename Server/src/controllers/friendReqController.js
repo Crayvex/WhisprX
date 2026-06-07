@@ -21,6 +21,23 @@ export const sendReq = asyncHandler(async (req, res) => {
     throw new AppError('User not found', 404);
   }
 
+  const reversePending = await FriendRequest.findOne({
+    sender: receiverId,
+    receiver: sender,
+    status: 'pending',
+  });
+
+  if (reversePending) {
+    reversePending.status = 'accepted';
+    await reversePending.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Friend request accepted',
+      data: reversePending.toPublicJSON(),
+    });
+  }
+
   const existing = await FriendRequest.findOne({ sender, receiver: receiverId });
 
   if (existing) {
@@ -183,12 +200,14 @@ export const getFriends = asyncHandler(async (req, res) => {
     .populate('receiver', 'username email profilePic')
     .sort({ updatedAt: -1 });
 
-  const friends = friendships.map((friendship) => {
-    const friend =
-      friendship.sender._id.equals(userId) ? friendship.receiver : friendship.sender;
+  const friends = friendships
+    .map((friendship) => {
+      const friend =
+        friendship.sender?._id?.equals(userId) ? friendship.receiver : friendship.sender;
 
-    return friend.toPublicJSON?.() ?? friend;
-  });
+      return friend?.toPublicJSON?.() ?? null;
+    })
+    .filter(Boolean);
 
   res.status(200).json({
     success: true,
