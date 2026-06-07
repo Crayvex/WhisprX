@@ -8,6 +8,7 @@ import connectDB from './src/config/db.js';
 import errorHandler from './src/middleware/errorHandler.js';
 import socketAuth from './src/middleware/socketAuth.js';
 import authRoutes from './src/routes/authRoutes.js';
+import messageRoutes from './src/routes/messageRoutes.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -40,6 +41,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
@@ -50,15 +52,15 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-io.use(socketAuth);
+// io.use(socketAuth);
 
-io.on('connection', (socket) => {
-  console.log(`Socket connected: ${socket.userId} (${socket.userRole})`);
+// io.on('connection', (socket) => {
+//   console.log(`Socket connected: ${socket.userId} (${socket.userRole})`);
 
-  socket.on('disconnect', () => {
-    console.log(`Socket disconnected: ${socket.userId}`);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log(`Socket disconnected: ${socket.userId}`);
+//   });
+// });
 
 const startServer = async () => {
   await connectDB();
