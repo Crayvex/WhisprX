@@ -8,7 +8,7 @@ const ChatArea = () => {
     <section id="ChatArea" className="h-full w-full">
       <div className="nav h-[8%] w-full bg-base-300 flex items-center justify-between px-6">
         <div className="flex items-center gap-4 cursor-pointer">
-            <img src="Image\default.png" alt="pfp" className="size-10 rounded-full"/>
+            <img src="/Image/default.png" alt="pfp" className="size-10 rounded-full"/>
             <div>
                 <h1>User1</h1>
                 <p className="flex items-center gap-1 text-sm"><span className="size-2 animate-pulse bg-emerald-600 rounded-full"/> Online</p>
@@ -27,7 +27,7 @@ const ChatArea = () => {
                 </div>
             </div>
             <div className="msgReceived flex justify-start gap-2 px-2">
-                <img src="Image/default.png" alt="pfp" className="rounded-full size-10"/>
+                <img src="/Image/default.png" alt="pfp" className="rounded-full size-10"/>
                 <div className="bg-neutral rounded-2xl min-w-20 text-neutral-content py-2 px-4 max-w-3xl">
                     Heyyy
                 </div>

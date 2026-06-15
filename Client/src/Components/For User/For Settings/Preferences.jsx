@@ -1,4 +1,3 @@
-import React from "react";
 import { DAISYUI_THEMES, useThemeStore } from "../../../Store/useThemeStore";
 import { Check } from 'lucide-react'
 
@@ -35,7 +34,7 @@ const Preferences = () => {
   const setTheme = useThemeStore((state) => state.setTheme);
 
   return (
-    <div className="h-full w-full bg-base-200 text-base-content">
+    <div className="h-full w-full text-base-content">
       <div className="mx-auto p-4 max-w-full h-full overflow-y-scroll">
         <div className="mb-8 flex items-center justify-between">
           <div>
