@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import AppError from '../utils/AppError.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import cloudinary from '../config/cloudinary.js';
 import {
   buildTokenPayload,
   signAccessToken,
@@ -117,6 +118,29 @@ export const getMe = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     user: req.user.toPublicJSON(),
+  });
+});
+
+export const updateMe = asyncHandler(async (req, res) => {
+  const { profilePic } = req.body;
+  const userId = req.user._id;
+
+  if (!profilePic) {
+    throw new AppError('Profile picture is required', 400);
+  }
+
+  const uploadResponse = await cloudinary.uploader.upload(profilePic);
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { profilePic: uploadResponse.secure_url },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: 'Profile updated successfully',
+    user: updatedUser.toPublicJSON(),
   });
 });
 

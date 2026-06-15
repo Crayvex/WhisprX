@@ -8,6 +8,7 @@ import Requests from "../../Components/For User/For Requests/Requests";
 import RequestSent from "../../Components/For User/For Requests/RequestSent";
 import RequestReceived from "../../Components/For User/For Requests/RequestReceived";
 import AddFriend from "../../Components/For User/For Requests/AddFriend";
+import Profile from "../../Components/For User/For Profile/Profile";
 
 const App = () => {
   const [isNavbarHovered, setIsNavbarHovered] = useState(false);
@@ -29,6 +30,7 @@ const App = () => {
         <div className={`w-full h-[95%] transition-all duration-300 px-20 my-4`}>
           <Routes>
             <Route index element={<Outlet />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="settings/*" element={<Settings />}>
               <Route path="preferences" element={<Preferences />} />
             </Route>
