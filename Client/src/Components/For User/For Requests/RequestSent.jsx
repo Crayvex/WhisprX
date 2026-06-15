@@ -24,16 +24,20 @@ const RequestSent = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {sentRequest.map((request) => {
             const receiver = request.receiver || {};
-            const isOnline = onlineUsers.includes(receiver._id);
+            const isOnline = onlineUsers.includes(receiver.id);
 
             return (
               <div
-                key={request._id}
+                key={request.id}
                 className="card card-body size-36 flex items-center justify-center bg-base-300 hover:scale-105 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img
-                    src={!receiver.profilePic ? "/Image/default.png" : receiver.profilePic}
+                    src={
+                      !receiver.profilePic
+                        ? "/Image/default.png"
+                        : receiver.profilePic
+                    }
                     alt="pfp"
                     className="size-12 rounded-full"
                   />
@@ -44,7 +48,9 @@ const RequestSent = () => {
                     <p className="flex items-center gap-1 text-xs text-base-content/60">
                       <span
                         className={`size-2 rounded-full ${
-                          isOnline ? "bg-emerald-600 animate-pulse" : "bg-base-content/30"
+                          isOnline
+                            ? "bg-emerald-600 animate-pulse"
+                            : "bg-base-content/30"
                         }`}
                       />{" "}
                       {isOnline ? "Online" : "Offline"}
@@ -54,7 +60,7 @@ const RequestSent = () => {
                 <button
                   type="button"
                   className="btn btn-error btn-sm w-full"
-                  onClick={() => cancelRequest(request._id, receiver._id)}
+                  onClick={() => cancelRequest(request.id, receiver.id)}
                 >
                   Cancel
                 </button>

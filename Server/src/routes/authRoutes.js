@@ -6,6 +6,7 @@ import {
   logout,
   refreshAccessToken,
   register,
+  searchUsers,
   updateMe,
   updateUserRole,
 } from '../controllers/authController.js';
@@ -21,6 +22,7 @@ router.post('/logout', authenticate, logout);
 router.get('/me', authenticate, getMe);
 router.put('/update-profile', authenticate, updateMe);
 
+router.get('/search', authenticate, searchUsers);
 router.get('/users', authenticate, authorize('admin'), listUsers);
 router.patch('/users/:userId/role', authenticate, authorize('admin'), updateUserRole);
 

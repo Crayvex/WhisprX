@@ -217,3 +217,33 @@ export const listUsers = asyncHandler(async (req, res) => {
     users: users.map((user) => user.toPublicJSON()),
   });
 });
+
+export const searchUsers = asyncHandler(async (req, res) => {
+  const { query } = req.query;
+  const currentUserId = req.user._id;
+
+  if (!query || query.trim() === '') {
+    return res.status(200).json({
+      success: true,
+      users: [],
+    });
+  }
+
+  const users = await User.find({
+    $and: [
+      { _id: { $ne: currentUserId } },
+      {
+        $or: [
+          { username: { $regex: query, $options: 'i' } },
+          { email: { $regex: query, $options: 'i' } },
+        ],
+      },
+    ],
+  }).limit(20);
+
+  res.status(200).json({
+    success: true,
+    count: users.length,
+    users: users.map((user) => user.toPublicJSON()),
+  });
+});
