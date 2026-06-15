@@ -18,6 +18,6 @@ router.patch('/reject-req/:id', authenticate, rejectReq);
 router.delete('/cancel-req/:id', authenticate, cancelReq);
 router.get('/incoming', authenticate, getIncomingRequests);
 router.get('/sent', authenticate, getSentRequests);
-router.get('/friends', authenticate, getFriends);
+router.get('/get-friends', authenticate, getFriends);
 
 export default router;

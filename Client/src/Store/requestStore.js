@@ -7,8 +7,6 @@ const requestStore = create((set, get) => ({
   receivedRequest: [],
   friends: [],
   searchResults: [],
-  selectedUser: null,
-  setSelectedUser: (selectedUser) => set({ selectedUser }),
   
   getSentRequest: async () => {
       try {
@@ -34,7 +32,7 @@ const requestStore = create((set, get) => ({
   },
   getFriends: async () => {
     try {
-      const res = await axiosInstance.get(`/friends/friends`);
+      const res = await axiosInstance.get(`/friends/get-friends`);
       const list = Array.isArray(res.data.friends) ? res.data.friends : [];
       set({ friends: list });
     } catch (err) {
