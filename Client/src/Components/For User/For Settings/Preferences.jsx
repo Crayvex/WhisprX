@@ -1,7 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { DAISYUI_THEMES, useThemeStore } from "../../../Store/useThemeStore";
 import { Check } from 'lucide-react'
-import { DAISYUI_THEMES, useThemeStore } from '../../Store/useThemeStore'
 
 const ThemePreview = ({ name, isActive, onSelect }) => (
   <button
@@ -9,7 +8,9 @@ const ThemePreview = ({ name, isActive, onSelect }) => (
     data-theme={name}
     onClick={() => onSelect(name)}
     className={`group relative w-full cursor-pointer overflow-hidden rounded-box border-2 bg-base-100 text-left transition-all hover:scale-[1.02] ${
-      isActive ? 'border-primary ring-2 ring-primary/30' : 'border-base-300 hover:border-primary/50'
+      isActive
+        ? "border-primary ring-2 ring-primary/30"
+        : "border-base-300 hover:border-primary/50"
     }`}
     aria-pressed={isActive}
     aria-label={`Select ${name} theme`}
@@ -21,27 +22,30 @@ const ThemePreview = ({ name, isActive, onSelect }) => (
       <div className="flex-1 bg-neutral" />
     </div>
     <div className="flex items-center justify-between px-3 py-2">
-      <span className="text-sm font-medium capitalize text-base-content">{name}</span>
+      <span className="text-sm font-medium capitalize text-base-content">
+        {name}
+      </span>
       {isActive && <Check className="size-4 text-primary" aria-hidden="true" />}
     </div>
   </button>
-)
+);
 
-const Settings = () => {
-  const theme = useThemeStore((state) => state.theme)
-  const setTheme = useThemeStore((state) => state.setTheme)
+const Preferences = () => {
+  const theme = useThemeStore((state) => state.theme);
+  const setTheme = useThemeStore((state) => state.setTheme);
 
   return (
-    <section id="Settings" className="min-h-dvh bg-base-200 px-4 py-8">
-      <div className="mx-auto max-w-4xl">
+    <div className="h-full w-full bg-base-200 text-base-content">
+      <div className="mx-auto p-4 max-w-full h-full overflow-y-scroll">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-base-content">Settings</h1>
-            <p className="mt-1 text-base-content/70">Customize your WhisprX experience</p>
+            <h1 className="text-3xl font-bold text-base-content">
+              Preferences
+            </h1>
+            <p className="mt-1 text-base-content/70">
+              Customize your WhisprX experience
+            </p>
           </div>
-          <Link to="/" className="btn btn-ghost btn-sm">
-            Back
-          </Link>
         </div>
 
         <div className="card bg-base-100 shadow-xl">
@@ -63,7 +67,11 @@ const Settings = () => {
                 onChange={(event) => setTheme(event.target.value)}
               >
                 {DAISYUI_THEMES.map((themeName) => (
-                  <option key={themeName} value={themeName} className="capitalize">
+                  <option
+                    key={themeName}
+                    value={themeName}
+                    className="capitalize"
+                  >
                     {themeName}
                   </option>
                 ))}
@@ -83,8 +91,8 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
 
-export default Settings
+export default Preferences;

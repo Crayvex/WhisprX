@@ -16,6 +16,7 @@ const userAuthStore = create((set, get) => ({
   isCheckingAuth: true,
   isVerifyingOTP: false,
   isUpdatingProfile: false,
+  profilePic: null,
   onlineUsers: [],
   socket: null,
 
@@ -49,7 +50,7 @@ const userAuthStore = create((set, get) => ({
       });
       set({ userAuth: res.data.user });
       toast.success("User Logged In Successfully");
-      get().connectSocket();
+      // get().connectSocket();
       return res.data.user;
     } catch (e) {
       const errorMessage =
@@ -65,7 +66,7 @@ const userAuthStore = create((set, get) => ({
       await axiosInstance.post("/auth/logout");
       set({userAuth: null});
       toast.success("Logged Out Successfully");
-      get().disconnectSocket();
+      // get().disconnectSocket();
     } catch (e) {
       toast.error("Logged Out Failed");
     }
@@ -77,6 +78,7 @@ const userAuthStore = create((set, get) => ({
       console.log("CheckAuth response:", res.data); // Debug log
       if (res.data && res.data.user) {
         set({ userAuth: res.data.user });
+        set({ profilePic: res.data.user.profilePic });
         // get().connectSocket();
         return res.data.user;
       } else {
@@ -119,28 +121,28 @@ const userAuthStore = create((set, get) => ({
       set({ isUpdatingProfile: false });
     }
   },
-  connectSocket: () => {
-    const { userAuth } = get()
-    if(!userAuth) return;
+  // connectSocket: () => {
+  //   const { userAuth } = get()
+  //   if(!userAuth) return;
 
-    const socket = io(BASE_URL, {
-        query : {
-          userId : userAuth._id
-        }
-    })
+  //   const socket = io(BASE_URL, {
+  //       query : {
+  //         userId : userAuth._id
+  //       }
+  //   })
 
-    socket.connect();
-    set({ socket : socket})
+  //   socket.connect();
+  //   set({ socket : socket})
 
-    socket.on(("getOnlineUsers"), (userIds) => {
-        set({ onlineUsers : userIds })
-    })
-  },
-  disconnectSocket : () => {
-    if(get().socket?.conneted){
-        get().socket.disconnect()
-    }
-  }
+  //   socket.on(("getOnlineUsers"), (userIds) => {
+  //       set({ onlineUsers : userIds })
+  //   })
+  // },
+  // disconnectSocket : () => {
+  //   if(get().socket?.conneted){
+  //       get().socket.disconnect()
+  //   }
+  // }
 }));
 
 export default userAuthStore;

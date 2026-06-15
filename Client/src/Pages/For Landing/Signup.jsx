@@ -36,9 +36,9 @@ const Signup = () => {
       <div className="card w-full max-w-md bg-base-100 shadow-xl">
         <div className="card-body gap-6">
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center w-full">
               <h1 className="text-3xl font-bold text-base-content">Registration</h1>
-              <a href="/" className="hover:bg-accent/20 px-2 scale-102 rounded py-1 transition-all duration-200">Back</a>
+              <a href="/" className="hover:bg-primary/20 px-2 scale-102 rounded py-1 transition-all duration-200">Back</a>
             </div>
             <p className="mt-1 text-sm text-base-content/70">
               Fill out the required information to register.
@@ -47,7 +47,7 @@ const Signup = () => {
 
           <form id="register-form" className="flex flex-col gap-4" onSubmit={handleRegister}>
             {state === 'signup' ? (
-              <label className="input input-bordered flex items-center gap-2 outline-0">
+              <label className="input input-bordered flex items-center gap-2 outline-0 w-full">
                 <UserIcon className="size-4 opacity-70" />
                 <input
                   type="text"
@@ -61,7 +61,7 @@ const Signup = () => {
               </label>
             ) : ''}
 
-            <label className="input input-bordered flex items-center gap-2 outline-0">
+            <label className="input input-bordered flex items-center gap-2 outline-0 w-full">
               <Mail className="size-4 opacity-70" />
               <input
                 type="email"
@@ -73,7 +73,7 @@ const Signup = () => {
               />
             </label>
 
-            <label className="input input-bordered flex items-center gap-2 outline-0">
+            <label className="input input-bordered flex items-center gap-2 outline-0 w-full">
               <KeyRound className="size-4 opacity-70" />
               <input
                 type={showPassword ? "text" : "password"}
