@@ -14,7 +14,7 @@ const Settings = () => {
           <NavLink
             to="/app/settings/preferences"
             className={ ({ isActive }) =>
-              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? 'bg-base-300 text-base-content font-semibold flex items-center gap-2' : 'text-base-content/80 hover:bg-base-300 bg-base-300/50'} flex items-center gap-2`
+              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent/20 text-base-content font-semibold flex items-center gap-2' : 'text-base-content/80 hover:bg-accent/20 bg-base-300/50'} flex items-center gap-2`
             }
             onClick={() => setState("Clicked")}
           >

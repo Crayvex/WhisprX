@@ -57,31 +57,27 @@ const messageStore = create((set, get) => ({
   },
 
   updateMsg: async ({ text }) => {
-    const { selectedMsg, messages } = get()
-        if(!selectedMsg?._id) return;
-        try {
-            const res = await axiosInstance.put(`/message/updateMessage/${selectedMsg._id}`, { text })
-            set({ messages: messages.map(m => m._id === selectedMsg._id ? { ...m, text } : m) })
-        } catch (e) {
-            toast.error("Could NOT update message")
-        }
+    const { selectedMsg, messages } = get();
+    if (!selectedMsg?.id) return;
+    try {
+      const res = await axiosInstance.patch(`/messages/update-msg/${selectedMsg.id}`, { text });
+      set({ messages: messages.map((m) => (m.id === selectedMsg.id ? { ...m, text } : m)) });
+    } catch (e) {
+      toast.error("Could NOT update message");
+    }
   },
 
   deleteMsg: async () => {
     const { selectedMsg, messages } = get();
-    if (!selectedMsg?._id) return;
+    if (!selectedMsg?.id) return;
     try {
-      const res = await axiosInstance.delete(
-        `/message/deleteMessage/${selectedMsg._id}`,
-      );
-      set({
-        messages: messages.filter((m) => m._id !== selectedMsg._id),
-        selectedMsg: null,
-      });
+      const res = await axiosInstance.delete(`/messages/delete-msg/${selectedMsg.id}`);
+      set({ messages: messages.filter((m) => m.id !== selectedMsg.id), selectedMsg: null });
     } catch (e) {
       toast.error("Could NOT delete message");
     }
   },
+
 }));
 
 export default messageStore;

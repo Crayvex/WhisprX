@@ -69,7 +69,7 @@ const Preferences = () => {
                   <option
                     key={themeName}
                     value={themeName}
-                    className="capitalize"
+                    className="capitalize hover:bg-accent/20"
                   >
                     {themeName}
                   </option>
