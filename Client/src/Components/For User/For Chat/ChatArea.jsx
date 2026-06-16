@@ -1,18 +1,39 @@
 import messageStore from "../../../Store/messageStore";
 import userAuthStore from "../../../Store/userStore";
-import { Image, MessageCircle, Send, X } from "lucide-react";
+import {
+  ChevronDown,
+  EllipsisVertical,
+  Image,
+  Menu,
+  MessageCircle,
+  Pencil,
+  Send,
+  Trash,
+  X,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { msgTimeFormat } from "../../../Libs/dateFormatter";
 
 const ChatArea = () => {
   const fileRef = useRef(null);
   const chatEndRef = useRef(null);
 
+  const [hoveredMessageId, setHoveredMessageId] = useState(null);
+  const [msgState, setMsgState] = useState("hidden");
+
   const selectedUser = messageStore((state) => state.selectedUser);
   const setSelectedUser = messageStore((state) => state.setSelectedUser);
-  const getChat = messageStore((state) => state.getChat);
+
   const messages = messageStore((state) => state.messages);
-  const sendMessage = messageStore((state) => state.sendMessage);
+  const selectedMsg = messageStore((state) => state.selectedMsg);
+  const setSelectedMsg = messageStore((state) => state.setSelectedMsg);
+
+  const getChat = messageStore((state) => state.getChat);
   const isSending = messageStore((state) => state.isSending);
+
+  const sendMessage = messageStore((state) => state.sendMessage);
+  const updateMsg = messageStore((state) => state.updateMsg);
+  const deleteMsg = messageStore((state) => state.deleteMsg);
 
   const userAuth = userAuthStore((state) => state.userAuth);
 
@@ -98,7 +119,7 @@ const ChatArea = () => {
           </div>
 
           {/* Chat area */}
-          <div className="chat relative h-[92%] overflow-y-auto pt-4 flex flex-col">
+          <div className="chat relative h-[92%] overflow-y-auto pt-0 flex flex-col">
             <div className="flex-1 overflow-y-auto px-2 pb-20">
               {messages.length === 0 && (
                 <div className="flex flex-col items-center justify-center h-full text-base-content/50">
@@ -111,31 +132,99 @@ const ChatArea = () => {
                 const isOwn =
                   message.senderId === userAuth?.id ||
                   message.senderId === userAuth?._id;
+                const messageId = message.id || message._id;
+                const isHovered = hoveredMessageId === messageId;
 
                 return (
                   <div
-                    key={message.id || message._id}
+                    key={messageId}
                     className={`flex gap-2 ${isOwn ? "justify-end" : "justify-start"} px-2`}
+                    onMouseEnter={() => setHoveredMessageId(messageId)}
+                    onMouseLeave={() => setHoveredMessageId(null)}
                   >
                     {!isOwn && (
-                      <img src={selectedUser.profilePic === "" ? "/Image/default.png" : selectedUser.profilePic} alt="pfp" className="size-10 rounded-full" />
+                      <img
+                        src={
+                          selectedUser.profilePic === ""
+                            ? "/Image/default.png"
+                            : selectedUser.profilePic
+                        }
+                        alt="pfp"
+                        className="size-10 rounded-full"
+                      />
                     )}
-                    <div
-                      className={`${
-                        isOwn
-                          ? "bg-accent text-accent-content"
-                          : "bg-neutral text-neutral-content"
-                      } mb-4 rounded-2xl min-w-20 py-2 px-4 max-w-3xl`}
-                    >
-                      {message.img && (
-                        <img
-                          src={message.img}
-                          alt="attachment"
-                          className="max-w-60 rounded-xl mb-2"
-                        />
-                      )}
-                      {message.text && <p>{message.text}</p>}
-                    </div>
+                    {!isOwn ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <div
+                          className={`${
+                            isOwn
+                              ? "bg-accent text-accent-content"
+                              : "bg-neutral text-neutral-content"
+                          } mb-4 rounded-2xl min-w-20 py-2 px-4 max-w-3xl`}
+                        >
+                          {message.img && (
+                            <img
+                              src={message.img}
+                              alt="attachment"
+                              className="max-w-60 rounded-xl mb-2"
+                            />
+                          )}
+                          {message.text && <p>{message.text}</p>}
+                        </div>
+                        <time className="opacity-45 text-sm">
+                          {msgTimeFormat(message.createdAt)}{" "}
+                        </time>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 text-sm">
+                        <div
+                          className={`${isHovered ? "inline-block" : "hidden"} w-46 relative cursor-pointer right-0 bottom-0`}
+                          onMouseEnter={() => setMsgState("inline-block")}
+                          onMouseLeave={() => setMsgState("hidden")}
+                        >
+                          <div className="group hover:bg-base-300 relative right-0 bottom-0 rounded-full size-10 cursor-pointer transition-all duration-300 outline-0 flex items-center p-2">
+                            <EllipsisVertical className="size-6"/>
+                            <div
+                              className={`${msgState} absolute left-0 bottom-0 z-20 bg-base-300 w-46 px-2 py-1`}
+                            >
+                              <time className="opacity-45 text-sm ">
+                                {msgTimeFormat(message.createdAt)}{" "}
+                              </time>
+                              <div className="border border-b border-base-200 my-2"></div>
+                              <button
+                                className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/70 rounded w-full cursor-pointer transition-all duration-300"
+                              >
+                                Edit
+                                <Pencil className="size-5"/> 
+                              </button>
+                              <button
+                                className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/70 rounded w-full cursor-pointer transition-all duration-300 text-error"
+                                onClick={() => setSelectedMsg(messageId)}
+                              >
+                                Delete
+                                <Trash className="size-5"/>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`${
+                            isOwn
+                              ? "bg-accent text-accent-content"
+                              : "bg-neutral text-neutral-content"
+                          } mb-4 rounded-2xl min-w-20 max-w-3xl relative`}
+                        >
+                          {message.img && (
+                            <img
+                              src={message.img}
+                              alt="attachment"
+                              className="max-w-60 rounded-xl p-2"
+                            />
+                          )}
+                          {message.text && <p className="px-4 py-2">{message.text}</p>}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -163,11 +252,8 @@ const ChatArea = () => {
             )}
 
             {/* Input bar */}
-            <form
-              onSubmit={handleSend}
-              className="absolute bottom-2 w-full"
-            >
-              <div className="w-[90%] mx-auto bg-base-300 h-12 rounded-2xl flex items-center px-4 gap-2">
+            <form onSubmit={handleSend} className="absolute bottom-2 w-full">
+              <div className="w-[90%] mx-auto bg-accent/20 h-12 rounded-2xl flex items-center px-4 gap-2">
                 <input
                   type="text"
                   placeholder="Send a message...."

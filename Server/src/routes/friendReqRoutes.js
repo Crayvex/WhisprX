@@ -15,7 +15,9 @@ const router = Router();
 router.post('/send-req/:id', authenticate, sendReq);
 router.patch('/accept-req/:id', authenticate, acceptReq);
 router.patch('/reject-req/:id', authenticate, rejectReq);
+
 router.delete('/cancel-req/:id', authenticate, cancelReq);
+
 router.get('/incoming', authenticate, getIncomingRequests);
 router.get('/sent', authenticate, getSentRequests);
 router.get('/get-friends', authenticate, getFriends);

@@ -20,7 +20,7 @@ const UsersList = () => {
       <div className="bg-base-300 rounded-2xl w-full h-8 flex items-center px-2">
         <input
           type="text"
-          className="text-sm outline-0 border-0"
+          className="text-sm w-full outline-0 border-0"
           placeholder="Search User"
         />
         <Search className="text-base-content/40" />
@@ -28,7 +28,7 @@ const UsersList = () => {
       <div className="mt-10">
         {friends.map((friend) => {
           return (
-            <div key={friend?.id} onClick={() => setSelectedUser(friend)} className="users flex gap-2 my-2 bg-base-100 hover:bg-base-300 cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl">
+            <div key={friend?.id} onClick={() => setSelectedUser(friend)} className="users flex gap-2 my-2 bg-base-100 hover:bg-accent/20 overflow-hidden cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl">
               <img
                 src={!friend.profilePic ? "/Image/default.png" : friend.profilePic}
                 alt="pfp"

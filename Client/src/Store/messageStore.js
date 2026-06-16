@@ -5,9 +5,12 @@ import { toast } from "react-toastify";
 const messageStore = create((set, get) => ({
   messages: [],
   selectedUser: null,
+  selectedMsg: null,
   isSending: false,
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+
+  setSelectedMsg: (selectedMsg) => set({ selectedMsg }),
 
   getChat: async (receiverId) => {
     if (!receiverId) return;
@@ -50,6 +53,33 @@ const messageStore = create((set, get) => ({
       toast.error(err.response?.data?.message || "Could not send message");
     } finally {
       set({ isSending: false });
+    }
+  },
+
+  updateMsg: async ({ text }) => {
+    const { selectedMsg, messages } = get()
+        if(!selectedMsg?._id) return;
+        try {
+            const res = await axiosInstance.put(`/message/updateMessage/${selectedMsg._id}`, { text })
+            set({ messages: messages.map(m => m._id === selectedMsg._id ? { ...m, text } : m) })
+        } catch (e) {
+            toast.error("Could NOT update message")
+        }
+  },
+
+  deleteMsg: async () => {
+    const { selectedMsg, messages } = get();
+    if (!selectedMsg?._id) return;
+    try {
+      const res = await axiosInstance.delete(
+        `/message/deleteMessage/${selectedMsg._id}`,
+      );
+      set({
+        messages: messages.filter((m) => m._id !== selectedMsg._id),
+        selectedMsg: null,
+      });
+    } catch (e) {
+      toast.error("Could NOT delete message");
     }
   },
 }));
