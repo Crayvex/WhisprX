@@ -3,6 +3,7 @@ import Message from '../models/Message.js';
 import User from '../models/User.js';
 import AppError from '../utils/AppError.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import { emitToUser } from '../utils/socket.js';
 
 export const sendMessage = asyncHandler(async (req, res) => {
   const { text, img } = req.body;
@@ -43,10 +44,13 @@ export const sendMessage = asyncHandler(async (req, res) => {
     img: imgURL,
   });
 
+  const payload = newMessage.toPublicJSON();
+  emitToUser(receiverId.toString(), 'receiveMessage', payload);
+
   res.status(201).json({
     success: true,
     message: 'Message sent successfully',
-    data: newMessage.toPublicJSON(),
+    data: payload,
   });
 });
 

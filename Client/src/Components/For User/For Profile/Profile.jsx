@@ -23,16 +23,16 @@ const Profile = () => {
 
   return (
     <section id="Profile" className="w-[50%] mx-auto h-full">
-      <div className="h-full w-full bg-accent text-accent-content px-4 py-2 flex flex-col gap-6 items-center">
+      <div className="h-full w-full bg-base-200 text-base-content px-4 py-2 flex flex-col gap-6 items-center">
         <h1 className="text-4xl text-center flex gap-2 items-center justify-center "><User className="size-8"/> Profile</h1>
-        <div className="mt-10 flex flex-col items-center">
-          <label className="flex relative size-20 mb-8 cursor-pointer">
+        <div className="mt-10 w-full flex flex-col items-center">
+          <label className="flex relative size-32 mb-8 cursor-pointer">
             <img
               src={!pfp ? "/Image/default.png" : pfp}
               alt="pfp"
-              className="size-20 rounded-full object-cover"
+              className="size-32 rounded-full object-cover"
             />
-            <Camera className="absolute right-0 bottom-0 text-base-content bg-base-300 rounded-full p-1 size-6" />
+            <Camera className="absolute right-0 bottom-0 text-base-content bg-base-300 rounded-full p-1 size-8" />
             <input
               type="file"
               accept="image/*"
@@ -41,13 +41,17 @@ const Profile = () => {
               disabled={isUpdatingProfile}
             />
           </label>
-          <label htmlFor="name" className="flex bg-base-300/25 rounded-2xl w-full justify-between px-4 py-2 my-2">Username:
-            <input type="text" placeholder={user.username} readOnly className="outline-0 border-0 cursor-default"/>
-            <Lock />
+          <label htmlFor="name" className="my-4 text-base-content/80 text-sm w-[60%]">Username:
+            <div className="flex bg-base-300/25 rounded-2xl w-full justify-between px-4 py-2 my-2">
+              <input type="text" placeholder={user.username} readOnly className="outline-0 border-0 cursor-default"/>
+              <Lock />
+            </div>
           </label>
-          <label htmlFor="name" className="flex bg-base-300/25 rounded-2xl w-full justify-between px-4 py-2 my-2">Email:
-            <input type="text" placeholder={user.email} readOnly className="outline-0 border-0 cursor-default"/>
-            <Lock />
+          <label htmlFor="name" className="mt-2 text-base-content/80 text-sm w-[60%]">Email:
+            <div className="flex bg-base-300/25 rounded-2xl w-full justify-between px-4 py-2 my-2">
+              <input type="text" placeholder={user.email} readOnly className="outline-0 border-0 cursor-default"/>
+              <Lock />
+            </div>
           </label>
         </div>
         <div className="absolute bottom-8 ">

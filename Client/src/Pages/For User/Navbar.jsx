@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className='relative w-full h-full'>
             <a href='/app/profile' className='m-2 mt-6 flex relative  items-center gap-2'>
                 <img src={!profilePic ? "/Image/default.png" : profilePic } alt="" className='size-10 rounded-full'/>
-                <p className='hidden group-hover:inline-block'>{userAuth.username}</p>
+                <h1 className='font-bold hidden group-hover:inline-block'>{userAuth.username}</h1>
             </a>
             <div className='flex flex-col items-center gap-4 pt-4 my-20 h-full'>
                 <a href="/app/chat" className='flex items-center gap-4 hover:bg-base-300/30 w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>

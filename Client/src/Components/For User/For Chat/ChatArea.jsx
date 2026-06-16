@@ -144,7 +144,7 @@ const ChatArea = () => {
 
             {/* Image preview */}
             {imgPreview && (
-              <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-base-300 p-2 rounded-xl">
+              <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-base-300 p-1 rounded-xl">
                 <div className="relative">
                   <img
                     src={imgPreview}

@@ -9,6 +9,13 @@ import errorHandler from './src/middleware/errorHandler.js';
 import authRoutes from './src/routes/authRoutes.js';
 import friendReqRoutes from './src/routes/friendReqRoutes.js';
 import messageRoutes from './src/routes/messageRoutes.js';
+import socketAuth from './src/middleware/socketAuth.js';
+import {
+  initSocket,
+  addOnlineUser,
+  removeOnlineUser,
+  broadcastOnlineUsers,
+} from './src/utils/socket.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -53,15 +60,19 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-// io.use(socketAuth);
+initSocket(io);
+io.use(socketAuth);
 
-// io.on('connection', (socket) => {
-//   console.log(`Socket connected: ${socket.userId} (${socket.userRole})`);
+io.on('connection', (socket) => {
+  const userId = socket.userId;
+  addOnlineUser(userId, socket.id);
+  broadcastOnlineUsers();
 
-//   socket.on('disconnect', () => {
-//     console.log(`Socket disconnected: ${socket.userId}`);
-//   });
-// });
+  socket.on('disconnect', () => {
+    removeOnlineUser(socket.id);
+    broadcastOnlineUsers();
+  });
+});
 
 const startServer = async () => {
   await connectDB();

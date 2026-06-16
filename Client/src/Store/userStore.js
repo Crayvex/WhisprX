@@ -2,10 +2,9 @@ import { create } from "zustand"
 import axiosInstance from "../Libs/axiosInstance";
 import { toast } from "react-toastify";
 import { io } from "socket.io-client"
+import messageStore from "./messageStore";
 
-const BASE_URL = "http://localhost:4000";
-
-//  import.meta.env.MODE === "development" ?  : "/"
+const BASE_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
 const userAuthStore = create((set, get) => ({
   userAuth: null,
@@ -50,7 +49,7 @@ const userAuthStore = create((set, get) => ({
       });
       set({ userAuth: res.data.user });
       toast.success("User Logged In Successfully");
-      // get().connectSocket();
+      get().connectSocket();
       return res.data.user;
     } catch (e) {
       const errorMessage =
@@ -66,7 +65,7 @@ const userAuthStore = create((set, get) => ({
       await axiosInstance.post("/auth/logout");
       set({userAuth: null});
       toast.success("Logged Out Successfully");
-      // get().disconnectSocket();
+      get().disconnectSocket();
     } catch (e) {
       toast.error("Logged Out Failed");
     }
@@ -79,7 +78,7 @@ const userAuthStore = create((set, get) => ({
       if (res.data && res.data.user) {
         set({ userAuth: res.data.user });
         set({ profilePic: res.data.user.profilePic });
-        // get().connectSocket();
+        get().connectSocket();
         return res.data.user;
       } else {
         console.error("Unexpected response structure:", res.data);
@@ -124,28 +123,46 @@ const userAuthStore = create((set, get) => ({
       set({ isUpdatingProfile: false });
     }
   },
-  // connectSocket: () => {
-  //   const { userAuth } = get()
-  //   if(!userAuth) return;
+  connectSocket: () => {
+    const { userAuth, socket: existingSocket } = get();
+    if (!userAuth) return;
 
-  //   const socket = io(BASE_URL, {
-  //       query : {
-  //         userId : userAuth._id
-  //       }
-  //   })
+    if (existingSocket?.connected) {
+      existingSocket.disconnect();
+    }
 
-  //   socket.connect();
-  //   set({ socket : socket})
+    const socket = io(BASE_URL, {
+      withCredentials: true,
+      autoConnect: false,
+    });
 
-  //   socket.on(("getOnlineUsers"), (userIds) => {
-  //       set({ onlineUsers : userIds })
-  //   })
-  // },
-  // disconnectSocket : () => {
-  //   if(get().socket?.conneted){
-  //       get().socket.disconnect()
-  //   }
-  // }
+    set({ socket });
+
+    socket.on('connect', () => {
+      console.log('Socket connected:', socket.id);
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Socket connection failed:', error.message || error);
+    });
+
+    socket.on('getOnlineUsers', (userIds) => {
+      set({ onlineUsers: userIds });
+    });
+
+    socket.on('receiveMessage', (message) => {
+      messageStore.getState().appendIncomingMessage(message);
+    });
+
+    socket.connect();
+  },
+  disconnectSocket: () => {
+    const socket = get().socket;
+    if (socket?.connected) {
+      socket.disconnect();
+    }
+    set({ socket: null, onlineUsers: [] });
+  }
 }));
 
 export default userAuthStore;

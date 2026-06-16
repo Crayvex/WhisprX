@@ -21,6 +21,14 @@ const messageStore = create((set, get) => ({
     }
   },
 
+  appendIncomingMessage: (message) => {
+    const { selectedUser, messages } = get();
+    const isCurrentChat = selectedUser?.id === message.senderId?.toString();
+    if (isCurrentChat) {
+      set({ messages: [...messages, message] });
+    }
+  },
+
   sendMessage: async ({ text, img }) => {
     const { selectedUser, messages } = get();
     if (!selectedUser) return;

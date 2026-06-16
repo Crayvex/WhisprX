@@ -1,11 +1,13 @@
 import messageStore from "../../../Store/messageStore";
 import requestStore from "../../../Store/requestStore";
+import userAuthStore from "../../../Store/userStore";
 import { Search } from "lucide-react";
 import { useEffect } from "react";
 
 const UsersList = () => {
   const friends = requestStore((state) => state.friends);
   const getFriends = requestStore((state) => state.getFriends);
+  const onlineUsers = userAuthStore((state) => state.onlineUsers);
 
   const setSelectedUser = messageStore((state) => state.setSelectedUser);
 
@@ -35,8 +37,10 @@ const UsersList = () => {
               <div>
                 <h1>{friend.username}</h1>
                 <span className="text-sm flex gap-1 items-center">
-                  <span className="animate-pulse bg-success size-2 rounded-full" />
-                  Online{" "}
+                  <span
+                    className={`size-2 rounded-full ${onlineUsers.includes(friend.id) ? 'bg-success' : 'bg-base-300'}`}
+                  />
+                  {onlineUsers.includes(friend.id) ? 'Online' : 'Offline'}
                 </span>
               </div>
             </div>
