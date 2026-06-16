@@ -18,12 +18,12 @@ const RequestReceived = () => {
     <section id="RequestReceived" className="px-4 py-2">
       <h1 className="font-bold text-2xl mb-8">Requests Received</h1>
       {receivedRequest.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-base-content/60">
+        <div className="flex flex-col items-center justify-center py-12 text-neutral-content/60">
           <p className="text-lg font-semibold">No pending incoming requests</p>
           <p className="text-sm">You're all caught up!</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="flex flex-col gap-4">
           {receivedRequest.map((request) => {
             const sender = request.sender || {};
             const isOnline = onlineUsers.includes(sender.id);
@@ -31,7 +31,7 @@ const RequestReceived = () => {
             return (
               <div
                 key={request.id}
-                className="card card-body size-36 flex items-center justify-center bg-base-300 hover:scale-105 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="min-h-8 w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-neutral/45 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -43,7 +43,7 @@ const RequestReceived = () => {
                     <h2 className="font-semibold text-sm truncate max-w-[80px]">
                       {sender.username || "Unknown"}
                     </h2>
-                    <p className="flex items-center gap-1 text-xs text-base-content/60">
+                    <p className="flex items-center gap-1 text-xs text-neutral-content/60">
                       <span
                         className={`size-2 rounded-full ${
                           isOnline ? "bg-emerald-600 animate-pulse" : "bg-base-content/30"
@@ -53,7 +53,7 @@ const RequestReceived = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 w-full">
+                <div className="flex items-center gap-2 min-h-8 w-36">
                   <button
                     type="button"
                     className="btn btn-success btn-sm w-[50%]"

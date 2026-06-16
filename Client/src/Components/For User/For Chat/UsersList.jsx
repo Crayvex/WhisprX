@@ -10,6 +10,7 @@ const UsersList = () => {
   const onlineUsers = userAuthStore((state) => state.onlineUsers);
 
   const setSelectedUser = messageStore((state) => state.setSelectedUser);
+  const selectedUser = messageStore((state) => state.selectedUser);
 
   useEffect(() => {
     getFriends();
@@ -17,18 +18,23 @@ const UsersList = () => {
 
   return (
     <section id="UserList" className="mt-4">
-      <div className="bg-base-300 rounded-2xl w-full h-8 flex items-center px-2">
+      <div className="bg-neutral/90 border border-accent/20 text-neutral-content rounded-2xl w-full h-10 flex items-center px-2">
         <input
           type="text"
           className="text-sm w-full outline-0 border-0"
           placeholder="Search User"
         />
-        <Search className="text-base-content/40" />
+        <Search />
       </div>
       <div className="mt-10">
         {friends.map((friend) => {
+          const isActive = selectedUser?.id === friend?.id;
           return (
-            <div key={friend?.id} onClick={() => setSelectedUser(friend)} className="users flex gap-2 my-2 bg-base-100 hover:bg-accent/20 overflow-hidden cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl">
+            <div
+              key={friend?.id}
+              onClick={() => setSelectedUser(friend)}
+              className={`users flex gap-2 my-2 overflow-hidden cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl ${isActive ? 'bg-accent text-accent-content' : 'text-neutral-content bg-neutral/65 hover:bg-accent/30'}`}
+            >
               <img
                 src={!friend.profilePic ? "/Image/default.png" : friend.profilePic}
                 alt="pfp"

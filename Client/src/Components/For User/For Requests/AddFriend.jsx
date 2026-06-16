@@ -1,10 +1,11 @@
-import { Search, Check, X } from "lucide-react";
+import { Search, Check, X, Info } from "lucide-react";
 import { useState, useEffect } from "react";
 import requestStore from "../../../Store/requestStore.js";
 import userAuthStore from "../../../Store/userStore.js";
 
 const AddFriend = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [state, setState] = useState('hidden')
 
   const searchUsers = requestStore((state) => state.searchUsers);
   const searchResults = requestStore((state) => state.searchResults);
@@ -56,7 +57,19 @@ const AddFriend = () => {
 
   return (
     <section id="AddFriend" className="py-2 px-4">
-      <div className="w-full bg-base-300 flex h-10 rounded-2xl px-4 items-center gap-2">
+      <div className="flex justify-start gap-4 items-center mb-6">
+        <h1 className="font-bold text-2xl">Add Friends</h1>
+        <span className="size-8 flex items-center justify-center rounded-full font-serif cursor-pointer relative" 
+        onMouseEnter={() => setState('inline-block')}
+        onMouseLeave={() => setState('hidden')}
+          >
+          <Info className="size-4" />
+          <div className={`${state} font-Poppins-Medium absolute top-4 left-8 w-60 text-sm px-2 py-1 bg-accent/65`}>
+            Search Your friend in the searchbar by their username or email
+          </div>
+        </span>
+      </div>
+      <div className="w-full bg-accent/60 flex h-10 rounded-2xl px-4 items-center gap-2">
         <input
           type="text"
           onChange={handleSearchChange}
@@ -79,7 +92,7 @@ const AddFriend = () => {
           <p className="text-sm">Try searching with a different name or email.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-10">
+        <div className="flex flex-col gap-4 mt-10">
           {searchResults.map((user) => {
             const userId = user.id || user._id;
             const isOnline = onlineUsers.includes(userId);
@@ -88,7 +101,7 @@ const AddFriend = () => {
             return (
               <div
                 key={userId}
-                className="card card-body size-36 flex items-center justify-center bg-base-300 hover:scale-103 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="w-full h-16 px-6 rounded-2xl flex items-center bg-neutral/50 hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -111,7 +124,7 @@ const AddFriend = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 w-full justify-center">
+                <div className="flex items-center gap-2 w-full justify-end">
                   {relationship.type === "friend" && (
                     <span className="badge badge-success badge-sm font-semibold p-2.5">
                       Friends
@@ -121,7 +134,7 @@ const AddFriend = () => {
                   {relationship.type === "sent" && (
                     <button
                       type="button"
-                      className="btn btn-error btn-xs w-full text-[10px]"
+                      className="btn btn-error btn-xs text-[10px] min-h-8 w-36"
                       onClick={() => cancelRequest(relationship.reqId, userId)}
                     >
                       Cancel
@@ -129,7 +142,7 @@ const AddFriend = () => {
                   )}
 
                   {relationship.type === "received" && (
-                    <div className="flex items-center gap-1.5 w-full">
+                    <div className="flex items-center gap-1.5 min-h-8 w-36">
                       <button
                         type="button"
                         className="btn btn-success btn-xs w-[50%]"
@@ -150,7 +163,7 @@ const AddFriend = () => {
                   {relationship.type === "stranger" && (
                     <button
                       type="button"
-                      className="btn btn-success btn-sm text-xs py-1 h-auto min-h-0 w-full"
+                      className="btn btn-success btn-sm text-xs py-1 h-auto min-h-8 w-36"
                       onClick={() => sendRequest(userId)}
                     >
                       Send Request

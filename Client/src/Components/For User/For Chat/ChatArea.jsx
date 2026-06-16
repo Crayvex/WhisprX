@@ -42,6 +42,7 @@ const ChatArea = () => {
   const deleteMsg = messageStore((state) => state.deleteMsg);
 
   const userAuth = userAuthStore((state) => state.userAuth);
+  const onlineUsers = userAuthStore((state) => state.onlineUsers);
 
   const [text, setText] = useState("");
   const [imgPreview, setImgPreview] = useState(null);
@@ -151,7 +152,7 @@ const ChatArea = () => {
       {selectedUser ? (
         <>
           {/* Nav bar */}
-          <div className="nav h-[8%] w-full bg-base-300 flex items-center justify-between px-6">
+          <div className="nav h-[8%] w-full bg-neutral text-neutral-content rounded-tr-2xl flex items-center justify-between px-6">
             <div className="flex items-center gap-4 cursor-pointer">
               <img
                 src={
@@ -165,8 +166,8 @@ const ChatArea = () => {
               <div>
                 <h1>{selectedUser?.username}</h1>
                 <p className="flex items-center gap-1 text-sm">
-                  <span className="size-2 animate-pulse bg-emerald-600 rounded-full" />{" "}
-                  Online
+                  <span className={`size-2 ${onlineUsers.includes(selectedUser?.id) ? 'bg-success animate-pulse' : 'bg-base-300'} rounded-full`} />{" "}
+                  {onlineUsers.includes(selectedUser?.id) ? 'Online' : 'Offline'}
                 </p>
               </div>
             </div>

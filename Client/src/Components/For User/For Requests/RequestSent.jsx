@@ -16,12 +16,12 @@ const RequestSent = () => {
     <section id="RequestSent" className="px-4 py-2">
       <h1 className="font-bold text-2xl mb-8">Requests Sent</h1>
       {sentRequest.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-base-content/60">
+        <div className="flex flex-col items-center justify-center py-12 text-neutral-content/60">
           <p className="text-lg font-semibold">No pending sent requests</p>
           <p className="text-sm">You haven't sent any friend requests yet.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="flex flex-col items-center gap-4">
           {sentRequest.map((request) => {
             const receiver = request.receiver || {};
             const isOnline = onlineUsers.includes(receiver.id);
@@ -29,7 +29,7 @@ const RequestSent = () => {
             return (
               <div
                 key={request.id}
-                className="card card-body size-36 flex items-center justify-center bg-base-300 hover:scale-105 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-base-300 hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -59,7 +59,7 @@ const RequestSent = () => {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-error btn-sm w-full"
+                  className="btn btn-error btn-sm min-h-8 w-36"
                   onClick={() => cancelRequest(request.id, receiver.id)}
                 >
                   Cancel

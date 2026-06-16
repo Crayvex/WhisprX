@@ -28,15 +28,15 @@ const Navbar = () => {
                 <h1 className='font-bold hidden group-hover:inline-block'>{userAuth.username}</h1>
             </a>
             <div className='flex flex-col items-center gap-4 pt-4 my-20 h-full'>
-                <a href="/app/chat" className='flex items-center gap-4 hover:bg-base-300/30 w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>
+                <a href="/app/chat" className='flex items-center gap-4 hover:bg-base-300/30 w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden border-b-2'>
                     <MessageCircle />
                     <span className='hidden group-hover:inline-block whitespace-nowrap'>Messages</span>
                 </a>
-                <a href="/app/requests" className='flex items-center gap-4 hover:bg-base-300/30 text-neutral-content w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>
+                <a href="/app/requests" className='flex items-center gap-4 hover:bg-base-300/30  border-b-2 text-neutral-content w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>
                     <UsersIcon />
                     <span className='hidden group-hover:inline-block whitespace-nowrap'>Requests</span>
                 </a>
-                <a href="/app/settings" className='flex items-center gap-4 hover:bg-base-300/30 text-neutral-content w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>
+                <a href="/app/settings" className='flex items-center gap-4 hover:bg-base-300/30  border-b-2 text-neutral-content w-[80%] px-[10%] py-2 rounded hover:ml-4 transition-all duration-150 overflow-hidden'>
                     <Settings />
                     <span className='hidden group-hover:inline-block whitespace-nowrap'>Settings</span>
                 </a>
