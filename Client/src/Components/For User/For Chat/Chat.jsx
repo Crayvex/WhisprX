@@ -8,7 +8,7 @@ const Chat = () => {
         <div className='w-[26%] bg-neutral/85 p-2 rounded-l-2xl'>
             <UsersList />
         </div>
-        <div className='w-[80%] bg-primary/25 rounded-r-2xl'>
+        <div className='w-[80%] bg-primary/60 rounded-r-2xl'>
             <ChatArea />
         </div>
     </div>

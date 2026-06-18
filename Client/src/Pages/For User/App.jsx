@@ -9,6 +9,10 @@ import RequestSent from "../../Components/For User/For Requests/RequestSent";
 import RequestReceived from "../../Components/For User/For Requests/RequestReceived";
 import AddFriend from "../../Components/For User/For Requests/AddFriend";
 import Profile from "../../Components/For User/For Profile/Profile";
+import Account from "../../Components/For User/For Settings/Account";
+import Privacy from "../../Components/For User/For Settings/Privacy";
+import About from "../../Components/For User/For Settings/About";
+import Friends from "../../Components/For User/For Requests/Friends";
 
 const App = () => {
   const [isNavbarHovered, setIsNavbarHovered] = useState(false);
@@ -17,10 +21,10 @@ const App = () => {
     <section>
       <div className={`h-dvh max-h-screen w-dvw flex justify-between gap-4 relative bg-base-100 text-base-content`}>
         <div
-          className={`cursor-pointer absolute h-full z-20 ${isNavbarHovered ? "backdrop-blur-2xl w-full" : ""}`}
+          className={`absolute h-full z-20 ${isNavbarHovered ? "backdrop-blur-2xl w-full" : ""}`}
         >
           <div
-            className="group h-full w-[10%] min-w-16 md:w-16 md:hover:w-[20%] hover:w-[40%] transition-all duration-300 cursor-pointer bg-neutral text-neutral-content overflow-hidden "
+            className="group h-full w-[10%] min-w-16 md:w-16 md:hover:w-[20%] hover:w-[40%] transition-all duration-300 bg-neutral text-neutral-content overflow-hidden "
             onMouseEnter={() => setIsNavbarHovered(true)}
             onMouseLeave={() => setIsNavbarHovered(false)}
           >
@@ -32,12 +36,16 @@ const App = () => {
             <Route index element={<Outlet />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings/*" element={<Settings />}>
+              <Route path="account" element={<Account />} />
               <Route path="preferences" element={<Preferences />} />
+              <Route path="privacy" element={<Privacy />} />
+              <Route path="about" element={<About />} />
             </Route>
             <Route path="chat" element={<Chat />}/>
             <Route path="requests/*" element={<Requests />}>
               <Route path="sent" element={<RequestSent />} />
               <Route path="received" element={<RequestReceived />}/>
+              <Route path="manage-friends" element={<Friends />}/>
               <Route path="send-request" element={<AddFriend />}/>
             </Route>
           </Routes>

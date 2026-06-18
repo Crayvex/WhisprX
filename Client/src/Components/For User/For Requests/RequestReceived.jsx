@@ -18,7 +18,7 @@ const RequestReceived = () => {
     <section id="RequestReceived" className="px-4 py-2">
       <h1 className="font-bold text-2xl mb-8">Requests Received</h1>
       {receivedRequest.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-neutral-content/60">
+        <div className="flex flex-col items-center justify-center py-12 text-base-content/60">
           <p className="text-lg font-semibold">No pending incoming requests</p>
           <p className="text-sm">You're all caught up!</p>
         </div>

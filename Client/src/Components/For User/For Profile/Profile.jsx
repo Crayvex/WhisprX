@@ -23,8 +23,8 @@ const Profile = () => {
 
   return (
     <section id="Profile" className="w-[50%] mx-auto h-full">
-      <div className="h-full w-full bg-base-200 text-base-content px-4 py-2 flex flex-col gap-6 items-center">
-        <h1 className="text-4xl text-center flex gap-2 items-center justify-center "><User className="size-8"/> Profile</h1>
+      <div className="h-full w-full bg-base-200 text-base-content px-4 py-2 flex flex-col gap-6">
+        <h1 className="text-4xl text-center flex gap-2 items-center"><User className="size-8"/> Profile</h1>
         <div className="mt-10 w-full flex flex-col items-center">
           <label className="flex relative size-32 mb-8 cursor-pointer">
             <img

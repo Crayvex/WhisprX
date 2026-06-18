@@ -7,6 +7,7 @@ const messageStore = create((set, get) => ({
   selectedUser: null,
   selectedMsg: null,
   isSending: false,
+  isChatLoading: false,
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
 
@@ -15,12 +16,16 @@ const messageStore = create((set, get) => ({
   getChat: async (receiverId) => {
     if (!receiverId) return;
     try {
+      set({ isChatLoading: true})
       const res = await axiosInstance.get(`/messages/get-chat/${receiverId}`);
       const list = Array.isArray(res.data.messages) ? res.data.messages : [];
       set({ messages: list });
     } catch (err) {
       console.log(err);
       set({ messages: [] });
+      set({ isChatLoading: false})
+    } finally {
+      set({ isChatLoading: false})
     }
   },
 

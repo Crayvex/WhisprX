@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { msgTimeFormat } from "../../../Libs/dateFormatter";
+import ChatSkeleton from "./ChatSkeleton";
 
 const ChatArea = () => {
   const fileRef = useRef(null);
@@ -35,6 +36,7 @@ const ChatArea = () => {
   const setSelectedMsg = messageStore((state) => state.setSelectedMsg);
 
   const getChat = messageStore((state) => state.getChat);
+  const isChatLoading = messageStore((state) => state.isChatLoading);
   const isSending = messageStore((state) => state.isSending);
 
   const sendMessage = messageStore((state) => state.sendMessage);
@@ -173,7 +175,7 @@ const ChatArea = () => {
             </div>
             <div
               onClick={() => setSelectedUser(null)}
-              className="hover:bg-base-200 p-2 flex items-center rounded-full cursor-pointer"
+              className="hover:bg-neutral-400 p-2 flex items-center rounded-full cursor-pointer"
             >
               <X />
             </div>
@@ -181,162 +183,168 @@ const ChatArea = () => {
 
           {/* Chat area */}
           <div className="chat relative h-[92%] overflow-y-auto pt-1 flex flex-col">
-            <div className="flex-1 overflow-y-auto px-2 pb-20">
-              {messages.length === 0 && (
-                <div className="flex flex-col items-center justify-center h-full text-base-content/50">
-                  <p className="text-lg font-semibold">No messages yet</p>
-                  <p className="text-sm">Send a message to start chatting!</p>
-                </div>
-              )}
-
-              {messages.map((message) => {
-                const isOwn =
-                  message.senderId === userAuth?.id ||
-                  message.senderId === userAuth?._id;
-                const messageId = message.id || message._id;
-                const isHovered = hoveredMessageId === messageId;
-
-                return (
-                  <div
-                    key={messageId}
-                    className={`flex gap-2 ${isOwn ? "justify-end" : "justify-start"} px-2`}
-                    onMouseEnter={() => setHoveredMessageId(messageId)}
-                    onMouseLeave={() => setHoveredMessageId(null)}
-                  >
-                    {!isOwn && (
-                      <img
-                        src={
-                          selectedUser.profilePic === ""
-                            ? "/Image/default.png"
-                            : selectedUser.profilePic
-                        }
-                        alt="pfp"
-                        className="size-10 rounded-full"
-                      />
-                    )}
-                    {!isOwn ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <div
-                          className={`${
-                            isOwn
-                              ? "bg-accent text-accent-content"
-                              : "bg-neutral text-neutral-content"
-                          } mb-4 rounded-2xl min-w-20 py-2 px-4 max-w-3xl`}
-                        >
-                          {message.img && (
-                            <img
-                              src={message.img}
-                              alt="attachment"
-                              className="max-w-60 rounded-xl mb-2"
-                            />
-                          )}
-                          {message.text && <p>{message.text}</p>}
-                        </div>
-                        <time className="opacity-45 text-sm">
-                          {msgTimeFormat(message.createdAt)}{" "}
-                        </time>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center gap-2 text-sm">
-                        <div className={`${isHovered ? "inline-block" : "hidden"} w-46 relative cursor-pointer right-0 bottom-0`}>
-                          <div
-                            ref={openMenuId === messageId ? menuRef : null}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (openMenuId === messageId) {
-                                setOpenMenuId(null);
-                              } else {
-                                setOpenMenuId(messageId);
-                                // compute position when opening
-                                setTimeout(() => {
-                                  try {
-                                    const rect = menuRef.current?.getBoundingClientRect();
-                                    const ddWidth = dropdownRef.current?.offsetWidth || 180;
-                                    const ddHeight = dropdownRef.current?.offsetHeight || 140;
-                                    const chatRect = document.getElementById("ChatArea")?.getBoundingClientRect();
-                                    if (rect && chatRect) {
-                                      if (rect.left + ddWidth > chatRect.right - 8) {
-                                        setDropdownPosition("right");
-                                      } else if (rect.right - ddWidth < chatRect.left + 8) {
-                                        setDropdownPosition("left");
-                                      } else {
-                                        setDropdownPosition("left");
-                                      }
-
-                                      const fitsBelow = rect.bottom + ddHeight <= chatRect.bottom - 8;
-                                      const fitsAbove = rect.top - ddHeight >= chatRect.top + 8;
-                                      if (fitsBelow) setDropdownVertical("bottom");
-                                      else if (fitsAbove) setDropdownVertical("top");
-                                      else setDropdownVertical("bottom");
-                                    } else if (rect) {
-                                      if (rect.left + ddWidth > window.innerWidth - 8) setDropdownPosition("right");
-                                      setDropdownVertical("bottom");
-                                    }
-                                  } catch (e) {
-                                    /* ignore */
-                                  }
-                                }, 0);
-                              }
-                            }}
-                            className="group hover:bg-accent/20 relative right-0 bottom-0 rounded-full size-10 cursor-pointer transition-all duration-300 outline-0 flex items-center p-2"
-                          >
-                            <EllipsisVertical className="size-6" />
+            {isChatLoading ? (
+              <ChatSkeleton />
+            ) : (
+              <>
+                <div className="flex-1 overflow-y-auto px-2 pb-20">
+                  {messages.length === 0 && (
+                    <div className="flex flex-col items-center justify-center h-full text-base-content/50">
+                      <p className="text-lg font-semibold">No messages yet</p>
+                      <p className="text-sm">Send a message to start chatting!</p>
+                    </div>
+                  )}
+                  
+                  { messages.map((message) => {
+                    const isOwn =
+                      message.senderId === userAuth?.id ||
+                      message.senderId === userAuth?._id;
+                    const messageId = message.id || message._id;
+                    const isHovered = hoveredMessageId === messageId;
+    
+                    return (
+                      <div
+                        key={messageId}
+                        className={`flex gap-2 ${isOwn ? "justify-end" : "justify-start"} px-2`}
+                        onMouseEnter={() => setHoveredMessageId(messageId)}
+                        onMouseLeave={() => setHoveredMessageId(null)}
+                      >
+                        {!isOwn && (
+                          <img
+                            src={
+                              selectedUser.profilePic === ""
+                                ? "/Image/default.png"
+                                : selectedUser.profilePic
+                            }
+                            alt="pfp"
+                            className="size-10 rounded-full"
+                          />
+                        )}
+                        {!isOwn ? (
+                          <div className="flex items-center justify-center gap-2">
                             <div
-                              ref={openMenuId === messageId ? dropdownRef : null}
-                              className={`${openMenuId === messageId ? "block" : "hidden"} absolute ${dropdownPosition === "left" ? "left-0" : "right-0"} ${dropdownVertical === "bottom" ? "top-full mt-2" : "bottom-full mb-2"} z-20 bg-neutral text-neutral-content w-46 p-2`}
+                              className={`${
+                                isOwn
+                                  ? "bg-accent text-accent-content"
+                                  : "bg-neutral text-neutral-content"
+                              } mb-4 rounded-2xl min-w-20 py-2 px-4 max-w-3xl`}
                             >
-                              <time className="opacity-45 text-sm ">
-                                {msgTimeFormat(message.createdAt)}{" "}
-                              </time>
-                              <div className="border border-b border-base-200 my-2"></div>
-                              {message.text && (
-                                <button
-                                  className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/40 rounded w-full cursor-pointer transition-all duration-300"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleEdit(message);
-                                  }}
-                                >
-                                  Edit
-                                  <Pencil className="size-5"/> 
-                                </button>
+                              {message.img && (
+                                <img
+                                  src={message.img}
+                                  alt="attachment"
+                                  className="max-w-60 rounded-xl mb-2"
+                                />
                               )}
-                              <button
-                                className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/40 rounded w-full cursor-pointer transition-all duration-300 text-error"
+                              {message.text && <p>{message.text}</p>}
+                            </div>
+                            <time className="opacity-45 text-sm">
+                              {msgTimeFormat(message.createdAt)}{" "}
+                            </time>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center gap-2 text-sm">
+                            <div className={`${isHovered ? "inline-block" : "hidden"} w-46 relative cursor-pointer right-0 bottom-0`}>
+                              <div
+                                ref={openMenuId === messageId ? menuRef : null}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleDelete(message);
+                                  if (openMenuId === messageId) {
+                                    setOpenMenuId(null);
+                                  } else {
+                                    setOpenMenuId(messageId);
+                                    // compute position when opening
+                                    setTimeout(() => {
+                                      try {
+                                        const rect = menuRef.current?.getBoundingClientRect();
+                                        const ddWidth = dropdownRef.current?.offsetWidth || 180;
+                                        const ddHeight = dropdownRef.current?.offsetHeight || 140;
+                                        const chatRect = document.getElementById("ChatArea")?.getBoundingClientRect();
+                                        if (rect && chatRect) {
+                                          if (rect.left + ddWidth > chatRect.right - 8) {
+                                            setDropdownPosition("right");
+                                          } else if (rect.right - ddWidth < chatRect.left + 8) {
+                                            setDropdownPosition("left");
+                                          } else {
+                                            setDropdownPosition("left");
+                                          }
+    
+                                          const fitsBelow = rect.bottom + ddHeight <= chatRect.bottom - 8;
+                                          const fitsAbove = rect.top - ddHeight >= chatRect.top + 8;
+                                          if (fitsBelow) setDropdownVertical("bottom");
+                                          else if (fitsAbove) setDropdownVertical("top");
+                                          else setDropdownVertical("bottom");
+                                        } else if (rect) {
+                                          if (rect.left + ddWidth > window.innerWidth - 8) setDropdownPosition("right");
+                                          setDropdownVertical("bottom");
+                                        }
+                                      } catch (e) {
+                                        /* ignore */
+                                      }
+                                    }, 0);
+                                  }
                                 }}
+                                className="group hover:bg-accent/20 relative right-0 bottom-0 rounded-full size-10 cursor-pointer transition-all duration-300 outline-0 flex items-center p-2"
                               >
-                                Delete
-                                <Trash className="size-5"/>
-                              </button>
+                                <EllipsisVertical className="size-6" />
+                                <div
+                                  ref={openMenuId === messageId ? dropdownRef : null}
+                                  className={`${openMenuId === messageId ? "block" : "hidden"} absolute ${dropdownPosition === "left" ? "left-0" : "right-0"} ${dropdownVertical === "bottom" ? "top-full mt-2" : "bottom-full mb-2"} z-20 bg-neutral text-neutral-content w-46 p-2`}
+                                >
+                                  <time className="opacity-45 text-sm ">
+                                    {msgTimeFormat(message.createdAt)}{" "}
+                                  </time>
+                                  <div className="border border-b border-base-200 my-2"></div>
+                                  {message.text && (
+                                    <button
+                                      className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/40 rounded w-full cursor-pointer transition-all duration-300"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleEdit(message);
+                                      }}
+                                    >
+                                      Edit
+                                      <Pencil className="size-5"/> 
+                                    </button>
+                                  )}
+                                  <button
+                                    className="flex items-center justify-between gap-2 px-4 py-1 hover:bg-accent/40 rounded w-full cursor-pointer transition-all duration-300 text-error"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(message);
+                                    }}
+                                  >
+                                    Delete
+                                    <Trash className="size-5"/>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className={`${
+                                isOwn
+                                  ? "bg-accent text-accent-content"
+                                  : "bg-neutral text-neutral-content"
+                              } mb-4 rounded-2xl min-w-20 max-w-3xl relative`}
+                            >
+                              {message.img && (
+                                <img
+                                  src={message.img}
+                                  alt="attachment"
+                                  className="max-w-60 rounded-xl p-2"
+                                />
+                              )}
+                              {message.text && <p className="px-4 py-2">{message.text}</p>}
                             </div>
                           </div>
-                        </div>
-                        <div
-                          className={`${
-                            isOwn
-                              ? "bg-accent text-accent-content"
-                              : "bg-neutral text-neutral-content"
-                          } mb-4 rounded-2xl min-w-20 max-w-3xl relative`}
-                        >
-                          {message.img && (
-                            <img
-                              src={message.img}
-                              alt="attachment"
-                              className="max-w-60 rounded-xl p-2"
-                            />
-                          )}
-                          {message.text && <p className="px-4 py-2">{message.text}</p>}
-                        </div>
+                        )}
                       </div>
-                    )}
+                    );
+                  })}
+                  <div ref={chatEndRef} />
                   </div>
-                );
-              })}
-              <div ref={chatEndRef} />
-            </div>
+              </>
+            )}
             
 
             {/* Image preview */}
@@ -401,7 +409,7 @@ const ChatArea = () => {
 
             {/* Input bar */}
             <form onSubmit={handleSend} className="absolute bottom-2 w-full">
-              <div className={`w-[90%] mx-auto ${editingMsg ? 'bg-accent/90 ring-2 ring-accent' : 'bg-accent/70'} text-accent-content h-12 rounded-2xl flex items-center px-4 gap-2 transition-all`}>
+              <div className={`w-[90%] mx-auto ${editingMsg ? 'bg-accent/90 ring-2 ring-accent' : 'bg-accent/70'} text-accent-content h-12 rounded-3xl flex items-center px-4 gap-2 transition-all`}>
                 <input
                   ref={inputRef}
                   type="text"

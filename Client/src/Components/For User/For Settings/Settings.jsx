@@ -1,4 +1,4 @@
-import { Palette, SettingsIcon, User } from 'lucide-react'
+import { Info, Lock, Palette, SettingsIcon, User } from 'lucide-react'
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ const Settings = () => {
           <NavLink
             to="/app/settings/account"
             className={ ({ isActive }) =>
-              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent/20 font-semibold flex items-center gap-2' : 'hover:bg-accent/20 bg-base-300/50'} flex items-center gap-2`
+              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent text-accent-content font-semibold flex items-center gap-2' : 'text-neutral-content hover:bg-accent/30'} flex items-center gap-2`
             }
             onClick={() => setState("Clicked")}
           >
@@ -24,16 +24,36 @@ const Settings = () => {
           <NavLink
             to="/app/settings/preferences"
             className={ ({ isActive }) =>
-              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent/20 font-semibold flex items-center gap-2' : 'hover:bg-accent/20 bg-base-300/50'} flex items-center gap-2`
+              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent text-accent-content font-semibold flex items-center gap-2' : 'text-neutral-content hover:bg-accent/30'} flex items-center gap-2`
             }
             onClick={() => setState("Clicked")}
           >
             <Palette />
             Preferences
           </NavLink>
+          <NavLink
+            to="/app/settings/privacy"
+            className={ ({ isActive }) =>
+              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent text-accent-content font-semibold flex items-center gap-2' : 'text-neutral-content hover:bg-accent/30'} flex items-center gap-2`
+            }
+            onClick={() => setState("Clicked")}
+          >
+            <Lock />
+            Privacy
+          </NavLink>
+          <NavLink
+            to="/app/settings/about"
+            className={ ({ isActive }) =>
+              `rounded px-3 py-2 transition-colors duration-200 ${isActive ? ' bg-accent text-accent-content font-semibold flex items-center gap-2' : 'text-neutral-content hover:bg-accent/30'} flex items-center gap-2`
+            }
+            onClick={() => setState("Clicked")}
+          >
+            <Info />
+            About
+          </NavLink>
         </div>
       </div>
-      <div className='w-[80%] bg-primary/25 rounded-r-2xl'>
+      <div className='w-[80%] bg-primary/60 rounded-r-2xl'>
         {state === "notClicked" ? (
           <div className='h-full w-full flex flex-col items-center justify-center'>
             <h1 className='font-bold text-4xl flex items-center gap-4'><SettingsIcon className="size-8 animate-spin" style={{ animationDuration: '3s' }}/> Settings</h1>

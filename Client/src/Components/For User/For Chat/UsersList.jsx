@@ -3,10 +3,12 @@ import requestStore from "../../../Store/requestStore";
 import userAuthStore from "../../../Store/userStore";
 import { Search } from "lucide-react";
 import { useEffect } from "react";
+import FriendListSkeleton from "./FriendListSkeleton";
 
 const UsersList = () => {
   const friends = requestStore((state) => state.friends);
   const getFriends = requestStore((state) => state.getFriends);
+  const fetchFriends = requestStore((state) => state.fetchFriends);
   const onlineUsers = userAuthStore((state) => state.onlineUsers);
 
   const setSelectedUser = messageStore((state) => state.setSelectedUser);
@@ -15,6 +17,12 @@ const UsersList = () => {
   useEffect(() => {
     getFriends();
   }, [getFriends]);
+
+  if (fetchFriends) {
+    return (
+      <FriendListSkeleton />
+    );
+  }
 
   return (
     <section id="UserList" className="mt-4">
@@ -33,10 +41,12 @@ const UsersList = () => {
             <div
               key={friend?.id}
               onClick={() => setSelectedUser(friend)}
-              className={`users flex gap-2 my-2 overflow-hidden cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl ${isActive ? 'bg-accent text-accent-content' : 'text-neutral-content bg-neutral/65 hover:bg-accent/30'}`}
+              className={`users flex gap-2 my-2 overflow-hidden cursor-pointer transition-all duration-300 px-2 py-1 rounded-2xl ${isActive ? "bg-accent text-accent-content" : "text-neutral-content hover:bg-accent/30"}`}
             >
               <img
-                src={!friend.profilePic ? "/Image/default.png" : friend.profilePic}
+                src={
+                  !friend.profilePic ? "/Image/default.png" : friend.profilePic
+                }
                 alt="pfp"
                 className="size-10 rounded-full"
               />
@@ -44,9 +54,9 @@ const UsersList = () => {
                 <h1>{friend.username}</h1>
                 <span className="text-sm flex gap-1 items-center">
                   <span
-                    className={`size-2 rounded-full ${onlineUsers.includes(friend.id) ? 'bg-success' : 'bg-base-300'}`}
+                    className={`size-2 rounded-full ${onlineUsers.includes(friend.id) ? "bg-success" : "bg-base-300"}`}
                   />
-                  {onlineUsers.includes(friend.id) ? 'Online' : 'Offline'}
+                  {onlineUsers.includes(friend.id) ? "Online" : "Offline"}
                 </span>
               </div>
             </div>

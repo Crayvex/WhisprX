@@ -69,7 +69,7 @@ const AddFriend = () => {
           </div>
         </span>
       </div>
-      <div className="w-full bg-accent/60 flex h-10 rounded-2xl px-4 items-center gap-2">
+      <div className="w-full text-primary-content bg-primary/40 flex h-10 rounded-2xl px-4 items-center gap-2">
         <input
           type="text"
           onChange={handleSearchChange}

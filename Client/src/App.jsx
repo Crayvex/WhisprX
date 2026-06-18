@@ -6,6 +6,7 @@ import { useThemeStore } from "./Store/useThemeStore";
 import Signup from "./Pages/For Landing/Signup";
 import userAuthStore from "./Store/userStore";
 import { Loader } from "lucide-react";
+import Dashboard from "./Pages/For Admin/Dashboard";
 
 const App = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -40,6 +41,10 @@ const App = () => {
         <Route
           path="/app/*"
           element={user ? <UserApp /> : <Navigate to={"/signup"} />}
+        />
+        <Route
+          path="/dashboard/*"
+          element={user?.role === "admin" ? <Dashboard /> : <Navigate to={"/app"} />}
         />
       </Routes>
     </main>
