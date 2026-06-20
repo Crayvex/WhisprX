@@ -123,6 +123,19 @@ const userAuthStore = create((set, get) => ({
       set({ isUpdatingProfile: false });
     }
   },
+  deleteAccount: async () => {
+    try {
+      const res = await axiosInstance.delete("/auth/delete-profile");
+      set({ userAuth: null });
+      get().disconnectSocket();
+      toast.success(res.data?.message || "Account deleted");
+      return res.data;
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error(error.response?.data?.message || error.message || "Failed to delete account");
+      throw error;
+    }
+  },
   connectSocket: () => {
     const { userAuth, socket: existingSocket } = get();
     if (!userAuth) return;

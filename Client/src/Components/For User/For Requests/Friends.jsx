@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import requestStore from "../../../Store/requestStore";
 import userAuthStore from "../../../Store/userStore";
-import { Check, MessageCircle, X } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
 const Friends = () => {
   const friends = requestStore((state) => state.friends);

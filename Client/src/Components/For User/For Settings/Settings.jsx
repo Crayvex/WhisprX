@@ -53,7 +53,7 @@ const Settings = () => {
           </NavLink>
         </div>
       </div>
-      <div className='w-[80%] bg-primary/60 rounded-r-2xl'>
+      <div className='w-[80%] bg-primary/60 rounded-r-2xl overflow-y-auto'>
         {state === "notClicked" ? (
           <div className='h-full w-full flex flex-col items-center justify-center'>
             <h1 className='font-bold text-4xl flex items-center gap-4'><SettingsIcon className="size-8 animate-spin" style={{ animationDuration: '3s' }}/> Settings</h1>

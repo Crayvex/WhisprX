@@ -1,4 +1,4 @@
-import { Users } from "lucide-react";
+import { Mail, Send, UserCog, UserPlus, Users } from "lucide-react";
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const Requests = () => {
             }
             onClick={() => setState("Clicked")}
           >
-            Manage Friends
+            <UserCog /> Manage Friends
           </NavLink>
           <NavLink
             to="/app/requests/send-request"
@@ -25,7 +25,7 @@ const Requests = () => {
             }
             onClick={() => setState("Clicked")}
           >
-            Add Friend
+            <UserPlus /> Add Friend
           </NavLink>
           <NavLink
             to="/app/requests/sent"
@@ -34,7 +34,7 @@ const Requests = () => {
             }
             onClick={() => setState("Clicked")}
           >
-            Requests Sent
+            <Send /> Requests Sent
           </NavLink>
           <NavLink
             to="/app/requests/received"
@@ -43,7 +43,7 @@ const Requests = () => {
             }
             onClick={() => setState("Clicked")}
           >
-            Requests Received
+            <Mail /> Requests Received
           </NavLink>
         </div>
       </div>
