@@ -1,9 +1,16 @@
 import { Mail, Send, UserCog, UserPlus, Users } from "lucide-react";
-import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const Requests = () => {
   const [state, setState] = useState("notClicked");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/app/requests");
+  }, []);
+
   return (
     <section id="Requests" className="h-full w-full flex gap-2 overflow-hidden">
       <div className="w-[20%] bg-neutral/85 p-2 rounded-l-2xl text-neutral-content px-4 py-2">

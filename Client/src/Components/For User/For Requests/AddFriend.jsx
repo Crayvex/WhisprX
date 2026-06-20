@@ -69,13 +69,13 @@ const AddFriend = () => {
           </div>
         </span>
       </div>
-      <div className="w-full text-primary-content bg-primary/40 flex h-10 rounded-2xl px-4 items-center gap-2">
+      <div className="w-full text-primary-content bg-primary/40 flex h-10 rounded-2xl px-4 items-center gap-2 input outline-0">
         <input
           type="text"
           onChange={handleSearchChange}
           value={searchQuery}
           placeholder="Search A User by Username or Email"
-          className="outline-0 border-0 w-full"
+          className="outline-0 w-full"
         />
         <Search className="text-base-content/40" />
       </div>
@@ -101,7 +101,7 @@ const AddFriend = () => {
             return (
               <div
                 key={userId}
-                className="w-full h-16 px-6 rounded-2xl flex items-center bg-neutral/50 hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="w-full h-16 px-6 rounded-2xl flex items-center bg-neutral/80 hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img

@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <section>
-      <div className={`h-dvh max-h-screen w-dvw flex justify-between gap-4 relative bg-base-100 text-base-content`}>
+      <div className={`h-dvh max-h-screen w-dvw flex justify-between gap-4 relative bg-base-200 text-base-content`}>
         <div
           className={`absolute h-full z-20 ${isNavbarHovered ? "backdrop-blur-2xl w-full" : ""}`}
         >
@@ -34,7 +34,6 @@ const App = () => {
         <div className={`w-full h-[95%] transition-all duration-300 px-20 my-4`}>
           <Routes>
             <Route index element={<Outlet />} />
-            <Route path="profile" element={<Profile />} />
             <Route path="settings/*" element={<Settings />}>
               <Route path="account" element={<Account />} />
               <Route path="preferences" element={<Preferences />} />

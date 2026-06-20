@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: 'Poppins-Bold';
-    src: url(Font\Poppins\Poppins-Bold.ttf) format(truetype);
+    src: url(/Font/Poppins/Poppins-Bold.ttf) format('truetype');
 }
 @font-face {
     font-family: 'Poppins-Medium';
@@ -19,7 +19,7 @@
 }
 @font-face {
     font-family: 'Roboto-Medium';
-    src: url(Font\Roboto\static\Roboto_Condensed-Medium.ttf) format(truetype);
+    src: url(/Font/Roboto/static/Roboto-Medium.ttf) format('truetype');
 }
 
 @layer base{

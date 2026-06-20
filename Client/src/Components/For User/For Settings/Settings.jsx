@@ -1,10 +1,15 @@
 import { Info, Lock, Palette, SettingsIcon, User } from 'lucide-react'
-import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 
 const Settings = () => {
   
     const [state, setState] = useState("notClicked")
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      navigate("/app/settings")
+    }, [])
 
   return (
     <section id="Settings" className="h-full flex w-full gap-2 overflow-hidden">
@@ -55,12 +60,11 @@ const Settings = () => {
       </div>
       <div className='w-[80%] bg-primary/60 rounded-r-2xl overflow-y-auto'>
         {state === "notClicked" ? (
-          <div className='h-full w-full flex flex-col items-center justify-center'>
+          <div className='h-full w-full flex flex-col items-center justify-center overflow-hidden'>
             <h1 className='font-bold text-4xl flex items-center gap-4'><SettingsIcon className="size-8 animate-spin" style={{ animationDuration: '3s' }}/> Settings</h1>
             <p className="text-sm text-base-content/65">Customize Your WhisprX Experience</p>
           </div>
-        ) : ""}
-        <Outlet />
+        ) : <Outlet />}
       </div>
     </section>
   )

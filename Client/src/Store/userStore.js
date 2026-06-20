@@ -15,6 +15,7 @@ const userAuthStore = create((set, get) => ({
   isCheckingAuth: true,
   isVerifyingOTP: false,
   isUpdatingProfile: false,
+  isChangingPassword: false,
   profilePic: null,
   onlineUsers: [],
   socket: null,
@@ -121,6 +122,24 @@ const userAuthStore = create((set, get) => ({
       throw error;
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+  changePassword: async ({ currentPassword, newPassword, confirmPassword }) => {
+    set({ isChangingPassword: true });
+    try {
+      const res = await axiosInstance.patch("/auth/change-password", {
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+      toast.success(res.data?.message || "Password changed successfully");
+      return res.data;
+    } catch (error) {
+      console.error("Error changing password:", error);
+      toast.error(error.response?.data?.message || error.message || "Failed to change password");
+      throw error;
+    } finally {
+      set({ isChangingPassword: false });
     }
   },
   deleteAccount: async () => {

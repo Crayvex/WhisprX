@@ -8,7 +8,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
-  const nextTheme = theme === "light" ? "dark" : "light";
+  const nextTheme = theme === "dark" ? "light" : "dark";
 
   const userAuth = userAuthStore((state) => state.userAuth)
 
@@ -60,7 +60,7 @@ const Navbar = () => {
   return (
     <nav
       id="Landing-Navbar"
-      className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-base-200/40 bg-base-100/20 px-6 py-4 text-base-content backdrop-blur-2xl transition-colors duration-500"
+      className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-base-200/40 bg-base-100/20 px-6 py-2 text-base-content backdrop-blur-2xl transition-colors duration-500"
     >
       <div className="flex items-center gap-3">
         <img src="/Image/WhisprX logo.png" alt="WhisprX logo" className="h-10 w-10 rounded-full object-cover" />

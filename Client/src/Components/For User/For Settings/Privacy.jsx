@@ -53,7 +53,7 @@ const Privacy = () => {
                 </p>
               </div>
 
-              <select className="select select-bordered">
+              <select className="select select-bordered outline-0">
                 <option>Everyone</option>
                 <option>Friends</option>
                 <option>Private</option>
@@ -100,7 +100,7 @@ const Privacy = () => {
               Download Data
             </button>
 
-            <button className="btn bg-red-500 hover:bg-red-700 text-accent-content border-none">
+            <button className="btn bg-red-500 hover:bg-red-800 text-accent-content border-none">
               Delete Account
             </button>
           </div>

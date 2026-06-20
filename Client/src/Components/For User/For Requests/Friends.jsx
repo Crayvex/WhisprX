@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import requestStore from "../../../Store/requestStore";
 import userAuthStore from "../../../Store/userStore";
 import { MessageCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Friends = () => {
   const friends = requestStore((state) => state.friends);
   const onlineUsers = userAuthStore((state) => state.onlineUsers)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     friends;
-  }, []);
+  }, [friends]);
 
   return (
     <section id="Friends" className="w-full h-full">
@@ -21,7 +24,7 @@ const Friends = () => {
           return (
             <div
               key={friend.id || i}
-              className="min-h-8 w-full px-8 py-2 mb-2 rounded-2xl flex items-center justify-between bg-neutral/45 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+              className="min-h-8 w-full px-8 py-2 mb-2 rounded-2xl flex items-center justify-between bg-neutral/80 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
             >
               <div className="flex items-center gap-2">
                 <img
@@ -53,6 +56,7 @@ const Friends = () => {
                 <button
                   type="button"
                   className="btn btn-success btn-sm w-[50%]"
+                  onClick={() => navigate("/app/chat")}
                 >
                   <MessageCircle className="size-4" />
                 </button>

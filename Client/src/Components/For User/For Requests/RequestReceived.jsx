@@ -31,7 +31,7 @@ const RequestReceived = () => {
             return (
               <div
                 key={request.id}
-                className="min-h-8 w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-neutral/45 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="min-h-8 w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-neutral/80 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img

@@ -144,6 +144,36 @@ export const updateMe = asyncHandler(async (req, res) => {
   });
 });
 
+export const changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const userId = req.user._id;
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    throw new AppError('All password fields are required', 400);
+  }
+
+  if (newPassword !== confirmPassword) {
+    throw new AppError('New password and confirmation do not match', 400);
+  }
+
+  if (newPassword.length < 6) {
+    throw new AppError('Password must be at least 6 characters', 400);
+  }
+
+  const user = await User.findById(userId).select('+password');
+  if (!user || !(await user.comparePassword(currentPassword))) {
+    throw new AppError('Current password is incorrect', 401);
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Password updated successfully',
+  });
+});
+
 export const deleteMe = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   

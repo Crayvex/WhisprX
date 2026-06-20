@@ -31,40 +31,37 @@ const Navbar = () => {
     <section id="Navbar" className="group h-full w-full">
       <div className="relative w-full h-full flex flex-col justify-between">
         <div className="m-2 mt-6 flex justify-around items-center gap-2">
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div className="flex items-center gap-2 cursor-default">
             <img
               src={!profilePic ? "/Image/default.png" : profilePic}
               alt=""
               className="size-10 rounded-full"
               rel="preload"
               fetchPriority="high"
-              onClick={() => navigate("/app/profile")}
             />
             <h1 className="font-bold hidden group-hover:inline-block text-xl">
               {userAuth.username}
             </h1>
           </div>
           {userAuth.role === "admin" ? (
-          <a
-            href="/dashboard"
-            className="hidden group-hover:inline-block whitespace-nowrap relative hover:text-accent transition-all duration-300 "
-            onMouseEnter={() => setState("flex")}
-            onMouseLeave={() => setState("hidden")}
-          >
-            <RefreshCcw />
-            <div
-              className={`${state} absolute bg-primary/30 top-8 text-sm right-0 px-2 py-1 rounded gap-4 items-center text-base-content`}
+            <a
+              href="/dashboard"
+              className="hidden group-hover:inline-block whitespace-nowrap relative hover:text-accent transition-all duration-300 "
+              onMouseEnter={() => setState("flex")}
+              onMouseLeave={() => setState("hidden")}
             >
-              <Info className="size-4" />
-              <p>
-                Switch to Admin <br /> Dashboard
-              </p>
-            </div>
-          </a>
+              <RefreshCcw />
+              <div
+                className={`${state} absolute bg-primary/30 top-8 text-sm right-0 px-2 py-1 rounded gap-4 items-center text-base-content`}
+              >
+                <Info className="size-4" />
+                <p>
+                  Switch to Admin <br /> Dashboard
+                </p>
+              </div>
+            </a>
           ) : (
-            <div>
-              
-            </div>
+            <div></div>
           )}
         </div>
         <div className="flex flex-col items-center gap-4 pt-4 my-20 h-full">

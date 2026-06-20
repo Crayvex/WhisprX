@@ -29,7 +29,7 @@ const RequestSent = () => {
             return (
               <div
                 key={request.id}
-                className="w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-base-300 hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
+                className="w-full px-8 py-2 rounded-2xl flex items-center justify-between bg-neutral/80 text-neutral-content hover:scale-101 hover:shadow-lg cursor-pointer transition-all duration-300 gap-4"
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -45,12 +45,12 @@ const RequestSent = () => {
                     <h2 className="font-semibold text-sm truncate max-w-[80px]">
                       {receiver.username || "Unknown"}
                     </h2>
-                    <p className="flex items-center gap-1 text-xs text-base-content/60">
+                    <p className="flex items-center gap-1 text-xs text-neutral-content/60">
                       <span
                         className={`size-2 rounded-full ${
                           isOnline
-                            ? "bg-emerald-600 animate-pulse"
-                            : "bg-base-content/30"
+                            ? "bg-emerald-600 animate-pulse drop-shadow-2xl shadow-emerald-500"
+                            : "bg-neutral-content/30"
                         }`}
                       />{" "}
                       {isOnline ? "Online" : "Offline"}
@@ -59,7 +59,7 @@ const RequestSent = () => {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-error btn-sm min-h-8 w-36"
+                  className="btn btn-error btn-sm min-h-8 w-36 hover:bg-error/75"
                   onClick={() => cancelRequest(request.id, receiver.id)}
                 >
                   Cancel
