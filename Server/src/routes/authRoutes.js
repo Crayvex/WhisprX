@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  deleteMe,
   getMe,
   listUsers,
   login,
@@ -20,10 +21,11 @@ router.post('/refresh', refreshAccessToken);
 router.post('/logout', authenticate, logout);
 
 router.get('/me', authenticate, getMe);
-router.put('/update-profile', authenticate, updateMe);
-
 router.get('/search', authenticate, searchUsers);
 router.get('/users', authenticate, authorize('admin'), listUsers);
+
+router.put('/update-profile', authenticate, updateMe);
+router.delete('/delete-profile', authenticate, deleteMe);
 router.patch('/users/:userId/role', authenticate, authorize('admin'), updateUserRole);
 
 export default router;

@@ -44,6 +44,7 @@ const Navbar = () => {
               {userAuth.username}
             </h1>
           </div>
+          {userAuth.role === "admin" ? (
           <a
             href="/dashboard"
             className="hidden group-hover:inline-block whitespace-nowrap relative hover:text-accent transition-all duration-300 "
@@ -60,6 +61,11 @@ const Navbar = () => {
               </p>
             </div>
           </a>
+          ) : (
+            <div>
+              
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-center gap-4 pt-4 my-20 h-full">
           <a

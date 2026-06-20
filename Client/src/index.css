@@ -24,10 +24,10 @@
 
 @layer base{
     main{
-        @apply w-full h-full font-Poppins-Medium;
+        @apply w-full h-full font-Poppins-Medium overflow-hidden;
 
         #LandingPage{
-            @apply w-full h-dvh relative;
+            @apply w-full h-dvh;
 
             #Signup{
                 

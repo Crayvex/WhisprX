@@ -144,6 +144,28 @@ export const updateMe = asyncHandler(async (req, res) => {
   });
 });
 
+export const deleteMe = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  
+  if(!userId) {
+    throw new AppError("User Id is Required", 400)
+  }
+  
+  const user = await User.findById(userId);
+  
+  if(!user){
+    throw new AppError("User Does NOT Exist", 404)
+  }
+  
+  await User.deleteOne(user)
+  
+  res.status(200).json({
+    success: true,
+    message: 'User Deleted',
+  });
+
+})
+
 export const refreshAccessToken = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
