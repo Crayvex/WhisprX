@@ -40,7 +40,7 @@ const Navbar = () => {
               fetchPriority="high"
               onClick={() => navigate("/app/profile")}
             />
-            <h1 className="font-bold hidden group-hover:inline-block">
+            <h1 className="font-bold hidden group-hover:inline-block text-xl">
               {userAuth.username}
             </h1>
           </div>

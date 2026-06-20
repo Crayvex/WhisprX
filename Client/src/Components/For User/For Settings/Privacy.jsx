@@ -18,7 +18,7 @@ const Privacy = () => {
                 </p>
               </div>
 
-              <button className="btn bg-accent/80 text-accent-content border-none">
+              <button className="btn bg-accent/80 hover:bg-accent/60 text-accent-content border-none">
                 Change Password
               </button>
             </div>
@@ -69,7 +69,7 @@ const Privacy = () => {
                 </p>
               </div>
 
-              <button className="btn text-accent-content bg-accent/80 border-none">
+              <button className="btn text-accent-content bg-accent/80 hover:bg-accent/60 border-none">
                 Manage
               </button>
             </div>
@@ -96,11 +96,11 @@ const Privacy = () => {
           </p>
 
           <div className="flex gap-4">
-            <button className="btn text-accent-content bg-accent/80 border-none">
+            <button className="btn text-success-content bg-success/80 hover:bg-success/60 border-none">
               Download Data
             </button>
 
-            <button className="btn bg-red-500 text-accent-contentborder-none">
+            <button className="btn bg-red-500 hover:bg-red-700 text-accent-content border-none">
               Delete Account
             </button>
           </div>
